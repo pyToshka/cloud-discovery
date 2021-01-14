@@ -1,0 +1,7 @@
+from .cloud_discovery_plugin import cloud_discovery_plugin
+from .cloud_discovery_plugin_azure import cloud_discovery_plugin_azure
+from .cloud_discovery_plugin_gce import cloud_discovery_plugin_gce
+from .cloud_discovery_plugin_k8s import cloud_discovery_plugin_k8s
+from .cloud_discovery_plugin_os import cloud_discovery_plugin_os
+from .cloud_discovery_plugin_do import cloud_discovery_plugin_do
+from .cloud_discovery_plugin_linode import cloud_discovery_plugin_linode

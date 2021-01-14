@@ -1,0 +1,4 @@
+[bandit]
+pytest_filter: test_*
+skips: B307,B101
+exclude: ./eggs/*
