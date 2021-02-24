@@ -71,3 +71,4 @@ bin/
 .DS_Store
 .mr.developer.cfg
 .bandit_bc
+test/

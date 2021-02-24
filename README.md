@@ -306,7 +306,10 @@ Options:
                                   Output format for received information
   -a, --attribute [name|namespace|state|private_ip|public_ip]
                                   Get single attribute
-  --help                          Show this message and exit
+  -t, --top                       Show pods statistic
+  -s, --sort [cpu|memory]         Sort by value
+  -m, --limit INTEGER             Number of pods in top table
+  --help                          Show this message and exit.
 ```
 
 Output fields
@@ -316,6 +319,21 @@ Output fields
 - `state` - Pod current status
 - `private_ip` - Pod private ip
 - `public_ip` - Not public ip really. Kubernetes ingress hostname
+
+Top like output per pod. You can get/sort and limit statictic about memory and cpu usage in realtime per pod.
+
+Example of running
+
+``` shell
+cloud_discovery k8s -l k8s-app=kube-proxy -t -s memory --limit 3
+
+```
+
+It means getting memory usage for application with label `k8s-app=kube-proxy` sorted by memory usage and show me top 3 pod
+
+#####  Output:
+
+![k8s_top](img/k8s_top.png)
 
 #### Linode
 

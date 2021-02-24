@@ -31,15 +31,7 @@ import googleapiclient.discovery
 from click import Option
 from groundwork.patterns import GwCommandsPattern
 
-from .utils import pprint_json, pprint_table
-
-google_application_credentials = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-if not google_application_credentials:
-    logging.error(
-        "Google application credentials environment variable doesnt exist please export "
-        "GOOGLE_APPLICATION_CREDENTIALS"
-    )
-    exit(2)
+from .utils import pprint_json, pprint_table, get_gcp_connection
 
 
 def list_instances(compute, project, zone):
@@ -98,6 +90,7 @@ class cloud_discovery_plugin_gce(GwCommandsPattern):
         instances_list = []
         public_ip = ""
         private_ip = ""
+        get_gcp_connection()
         compute = googleapiclient.discovery.build("compute", "v1")
         vm = list_instances(compute, project, region)
         for instance in vm:
