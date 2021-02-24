@@ -31,6 +31,7 @@ import openstack
 import digitalocean
 import logging
 from linode import LinodeClient
+from kubernetes import client, config
 
 
 def pprint_json(json_array, sort=True, indents=4):
@@ -145,3 +146,50 @@ def get_li_connection():
         exit(2)
     client = LinodeClient(li_access_token)
     return client
+
+
+def get_gcp_connection():
+    google_application_credentials = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+    if not google_application_credentials:
+        logging.error(
+            "Google application credentials environment variable doesnt exist please export "
+            "GOOGLE_APPLICATION_CREDENTIALS"
+        )
+        exit(2)
+    return google_application_credentials
+
+
+def get_k8s_connection():
+    config.load_kube_config()
+    v1 = client.CoreV1Api()
+    return v1
+
+
+def check_k8s_apis():
+    for api in client.ApisApi().get_api_versions().groups:
+        versions = []
+        for v in api.versions:
+            name = ""
+            if v.version == api.preferred_version.version and len(api.versions) > 1:
+                name += "*"
+            name += v.version
+            versions.append(name)
+    if "metrics.k8s.io" in api.name:
+        return True
+    else:
+        raise Exception(
+            "Metrics are not available for kubernetes cluster. Please deploy "
+            "https://github.com/kubernetes-sigs/metrics-server"
+        )
+
+
+def convert_cpu(cpu_usage):
+    if "n" in cpu_usage[-1]:
+        calc = float(cpu_usage.replace("n", "")) / 1000000000
+    elif "u" in cpu_usage[-1]:
+        calc = float(cpu_usage.replace("u", "")) / 100000
+    elif "m" in cpu_usage[-1]:
+        calc = float(cpu_usage.replace("m", "")) / 1000
+    else:
+        calc = cpu_usage
+    return calc

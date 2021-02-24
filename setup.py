@@ -40,6 +40,8 @@ setup(
         "python-digitalocean>=1.16.0",
         "linode_api4>=3.0.2",
         "linode-api>=4.1.9b1",
+        "rich==9.11.1",
+        "bitmath==1.3.3.1",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
