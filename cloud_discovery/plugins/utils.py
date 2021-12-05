@@ -32,6 +32,7 @@ import digitalocean
 import logging
 from linode import LinodeClient
 from kubernetes import client, config
+import sys
 
 
 def pprint_json(json_array, sort=True, indents=4):
@@ -76,7 +77,7 @@ def get_azure_credentials():
             "Azure application credentials environment variable doesnt exist please check "
             "AZURE_SUBSCRIPTION_ID,AZURE_CLIENT_ID,AZURE_CLIENT_SECRET or AZURE_TENANT_ID"
         )
-        exit(2)
+        sys.exit(2)
     subscription_id = azure_subscription_id
     credentials = ServicePrincipalCredentials(
         client_id=azure_client_id, secret=azure_client_secret, tenant=azure_tenant_id
@@ -105,7 +106,7 @@ def get_os_connection():
             "OpenStack application credentials environment variable doesnt exist please check "
             "OS_AUTH_URL, OS_USERNAME, OS_PASSWORD, OS_PROJECT_ID, OS_USER_DOMAIN_NAME, OS_INTERFACE"
         )
-        exit(2)
+        sys.exit(2)
     try:
         conn = connection.Connection(
             auth=dict(
@@ -131,7 +132,7 @@ def get_do_connection():
             "DIGITALOCEAN_ACCESS_TOKEN doesnt find in system envs please export DIGITALOCEAN_ACCESS_TOKEN "
             "with token"
         )
-        exit(2)
+        sys.exit(2)
     manager = digitalocean.Manager()
     return manager
 
@@ -143,7 +144,7 @@ def get_li_connection():
             "LINODE_ACCESS_TOKEN doesnt find in system envs please export LINODE_ACCESS_TOKEN "
             "with token"
         )
-        exit(2)
+        sys.exit(2)
     client = LinodeClient(li_access_token)
     return client
 
@@ -155,7 +156,7 @@ def get_gcp_connection():
             "Google application credentials environment variable doesnt exist please export "
             "GOOGLE_APPLICATION_CREDENTIALS"
         )
-        exit(2)
+        sys.exit(2)
     return google_application_credentials
 
 
