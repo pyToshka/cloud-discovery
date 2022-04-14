@@ -1,4 +1,4 @@
-FROM python:3.11.0a6-alpine as builder
+FROM python:3.11.0a7-alpine as builder
 COPY . /app
 WORKDIR /app
 RUN pip install flake8==3.8.4
@@ -7,7 +7,7 @@ RUN apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev openssl-dev
 RUN pip wheel . --no-cache-dir --wheel-dir /usr/src/app/wheels
 RUN apk del .build-deps gcc musl-dev
 
-FROM python:3.11.0a6-alpine
+FROM python:3.11.0a7-alpine
 ENV PYTHONUNBUFFERED 1
 COPY --from=builder /usr/src/app/wheels /wheels
 RUN pip install --no-cache /wheels/* \
