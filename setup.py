@@ -40,7 +40,7 @@ setup(
         "python-digitalocean>=1.16.0",
         "linode_api4>=3.0.2",
         "linode-api>=4.1.9b1",
-        "rich==12.2.0",
+        "rich==12.3.0",
         "bitmath==1.3.3.1",
     ],
     classifiers=[
